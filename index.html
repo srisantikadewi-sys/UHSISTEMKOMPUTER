@@ -1,0 +1,1349 @@
+<!DOCTYPE html>
+<html lang="id" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MPI Informatika - Sistem Komputer & IMK SMAN 1 Karawang</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            cyber: {
+              50: '#eef2ff',
+              100: '#e0e7ff',
+              500: '#6366f1',
+              600: '#4f46e5',
+              700: '#4338ca',
+              800: '#3730a3',
+              900: '#312e81',
+              dark: '#0f172a',
+              card: '#1e293b',
+              accent: '#06b6d4'
+            }
+          },
+          fontFamily: {
+            sans: ['Inter', 'sans-serif']
+          }
+        }
+      }
+    }
+  </script>
+  <!-- Google Fonts Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #0b0f19;
+      color: #f3f4f6;
+    }
+    .glass-card {
+      background: rgba(30, 41, 59, 0.7);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    .custom-scrollbar::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-track {
+      background: rgba(15, 23, 42, 0.6);
+      border-radius: 4px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+      background: #4f46e5;
+      border-radius: 4px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+      background: #06b6d4;
+    }
+    .glow-effect {
+      box-shadow: 0 0 20px rgba(99, 102, 241, 0.35);
+    }
+    .glow-cyan {
+      box-shadow: 0 0 20px rgba(6, 182, 212, 0.35);
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between overflow-x-hidden selection:bg-indigo-500 selection:text-white">
+
+  <!-- TOP HEADER / NAVBAR -->
+  <header class="w-full glass-card sticky top-0 z-50 px-4 lg:px-8 py-3 flex items-center justify-between border-b border-slate-700/50">
+    <div class="flex items-center space-x-3">
+      <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-indigo-600 to-cyan-400 flex items-center justify-center text-white font-bold text-xl shadow-lg glow-effect">
+        <i class="fa-solid fa-laptop-code"></i>
+      </div>
+      <div>
+        <h1 class="font-bold text-base md:text-lg bg-clip-text text-transparent bg-gradient-to-r from-indigo-400 via-cyan-300 to-white">
+          MPI INFORMATIKA
+        </h1>
+        <p class="text-xs text-slate-400 hidden sm:block">SMAN 1 Karawang • Sistem Komputer & IMK</p>
+      </div>
+    </div>
+    
+    <div class="flex items-center space-x-3">
+      <div id="top-stats-bar" class="hidden md:flex items-center space-x-4 text-xs font-medium bg-slate-800/80 px-3 py-1.5 rounded-lg border border-slate-700">
+        <span class="text-indigo-300"><i class="fa-solid fa-list-check mr-1"></i> Soal: <span id="top-progress-text">1/50</span></span>
+        <span class="text-cyan-300"><i class="fa-regular fa-clock mr-1"></i> <span id="top-timer-text">00:00</span></span>
+      </div>
+      <button id="btn-guide-modal" onclick="toggleGuideModal()" class="px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-xs text-slate-200 border border-slate-700 transition flex items-center gap-1.5">
+        <i class="fa-solid fa-circle-question text-cyan-400"></i>
+        <span>Panduan</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- MAIN CONTAINER -->
+  <main class="flex-grow container mx-auto px-4 py-6 max-w-7xl">
+
+    <!-- 1. BERANDA / START SCREEN -->
+    <section id="screen-welcome" class="w-full max-w-4xl mx-auto py-6 flex flex-col items-center">
+      <div class="glass-card rounded-3xl p-6 md:p-10 w-full text-center relative overflow-hidden shadow-2xl border border-indigo-500/20">
+        <!-- Decorative Glow Backgrounds -->
+        <div class="absolute -top-24 -left-24 w-60 h-60 bg-indigo-600/20 rounded-full blur-3xl pointer-events-none"></div>
+        <div class="absolute -bottom-24 -right-24 w-60 h-60 bg-cyan-600/20 rounded-full blur-3xl pointer-events-none"></div>
+
+        <span class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-500/10 text-indigo-400 text-xs font-semibold border border-indigo-500/30 mb-4">
+          <i class="fa-solid fa-graduation-cap"></i> Media Pembelajaran Interaktif Kelas X
+        </span>
+        
+        <h2 class="text-2xl md:text-4xl font-extrabold text-white mb-3 tracking-tight">
+          Kuis Evaluasi Sistem Komputer & IMK
+        </h2>
+        <p class="text-sm md:text-base text-slate-300 max-w-2xl mx-auto mb-8 leading-relaxed">
+          Uji pemahaman modul materi Sistem Komputer, Interaksi Manusia & Komputer (IMK), Antarmuka masa depan, hingga Sistem Operasi di <strong class="text-cyan-300">SMAN 1 Karawang</strong>.
+        </p>
+
+        <!-- Topic Badges Grid -->
+        <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-3 mb-8 text-xs text-left">
+          <div class="p-3 rounded-xl bg-slate-800/80 border border-slate-700/60 flex flex-col items-start">
+            <i class="fa-solid fa-microchip text-indigo-400 text-base mb-1"></i>
+            <span class="font-bold text-white">Bagian A</span>
+            <span class="text-slate-400 text-[10px]">Sistem Komputer</span>
+          </div>
+          <div class="p-3 rounded-xl bg-slate-800/80 border border-slate-700/60 flex flex-col items-start">
+            <i class="fa-solid fa-hand-pointer text-cyan-400 text-base mb-1"></i>
+            <span class="font-bold text-white">Bagian B</span>
+            <span class="text-slate-400 text-[10px]">IMK (GUI & CLI)</span>
+          </div>
+          <div class="p-3 rounded-xl bg-slate-800/80 border border-slate-700/60 flex flex-col items-start">
+            <i class="fa-solid fa-face-smile text-emerald-400 text-base mb-1"></i>
+            <span class="font-bold text-white">Bagian C</span>
+            <span class="text-slate-400 text-[10px]">Voice & Biometrik</span>
+          </div>
+          <div class="p-3 rounded-xl bg-slate-800/80 border border-slate-700/60 flex flex-col items-start">
+            <i class="fa-brands fa-windows text-amber-400 text-base mb-1"></i>
+            <span class="font-bold text-white">Bagian D</span>
+            <span class="text-slate-400 text-[10px]">Sistem Operasi</span>
+          </div>
+          <div class="p-3 rounded-xl bg-slate-800/80 border border-slate-700/60 flex flex-col items-start col-span-2 sm:col-span-1">
+            <i class="fa-solid fa-award text-purple-400 text-base mb-1"></i>
+            <span class="font-bold text-white">Bagian E</span>
+            <span class="text-slate-400 text-[10px]">Evaluasi Total</span>
+          </div>
+        </div>
+
+        <!-- Quiz Settings Box -->
+        <div class="bg-slate-900/80 rounded-2xl p-5 border border-slate-800 max-w-xl mx-auto mb-8 text-left">
+          <h3 class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-3 flex items-center gap-2">
+            <i class="fa-solid fa-sliders text-indigo-400"></i> Pengaturan Sesi Kuis
+          </h3>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+              <label class="block text-xs text-slate-300 mb-1.5 font-medium">Jumlah Soal:</label>
+              <select id="select-question-count" class="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-indigo-500">
+                <option value="50" selected>50 Soal Paket Lengkap (Rekomendasi)</option>
+                <option value="25">25 Soal Acak</option>
+                <option value="10">10 Soal Latihan Cepat</option>
+              </select>
+            </div>
+            <div>
+              <label class="block text-xs text-slate-300 mb-1.5 font-medium">Mode Pembahasan:</label>
+              <select id="select-feedback-mode" class="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-indigo-500">
+                <option value="instant">Tampilkan Pembahasan Langsung Per Soal</option>
+                <option value="end">Tampilkan Pembahasan Lengkap di Akhir Kuis</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <!-- Start Action Button -->
+        <button onclick="startQuiz()" class="w-full sm:w-auto px-8 py-4 rounded-xl bg-gradient-to-r from-indigo-600 via-indigo-500 to-cyan-500 hover:from-indigo-500 hover:to-cyan-400 text-white font-bold text-base shadow-xl glow-effect transition transform hover:-translate-y-0.5 active:translate-y-0 flex items-center justify-center gap-3 mx-auto">
+          <i class="fa-solid fa-play"></i>
+          <span>Mulai Kerjakan Kuis</span>
+        </button>
+      </div>
+    </section>
+
+
+    <!-- 2. SCREEN KUIS INTERAKTIF -->
+    <section id="screen-quiz" class="hidden w-full space-y-5">
+      <!-- Top Status & Timer Card -->
+      <div class="glass-card rounded-2xl p-4 flex flex-wrap items-center justify-between gap-4 border border-slate-700/60">
+        <div class="flex items-center space-x-4">
+          <div class="px-3 py-1.5 rounded-lg bg-indigo-500/20 text-indigo-300 border border-indigo-500/30 font-bold text-xs">
+            Soal Ke- <span id="quiz-current-num">1</span> / <span id="quiz-total-num">50</span>
+          </div>
+          <div class="text-xs text-slate-400">
+            Kategori: <span id="quiz-category-badge" class="font-semibold text-cyan-300">Sistem Komputer</span>
+          </div>
+        </div>
+
+        <!-- Progress Bar -->
+        <div class="flex-grow max-w-xs mx-auto hidden md:block">
+          <div class="w-full bg-slate-800 rounded-full h-2.5 overflow-hidden border border-slate-700">
+            <div id="quiz-progress-bar" class="bg-gradient-to-r from-indigo-500 to-cyan-400 h-2.5 rounded-full transition-all duration-300" style="width: 2%;"></div>
+          </div>
+        </div>
+
+        <div class="flex items-center space-x-3">
+          <!-- Timer -->
+          <div class="px-3 py-1.5 rounded-lg bg-slate-800 text-amber-300 font-mono font-bold text-sm border border-slate-700 flex items-center gap-2">
+            <i class="fa-regular fa-clock"></i>
+            <span id="quiz-timer">00:00</span>
+          </div>
+          <!-- Navigation Grid Toggle Button -->
+          <button onclick="toggleNavGridModal()" class="px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs border border-slate-700 flex items-center gap-1.5">
+            <i class="fa-solid fa-grip text-cyan-400"></i>
+            <span class="hidden sm:inline">Navigasi Soal</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Main Question & Options Layout -->
+      <div class="grid grid-cols-1 lg:grid-cols-4 gap-6">
+        <!-- Question & Options Panel (3 Cols) -->
+        <div class="lg:col-span-3 space-y-5">
+          <div class="glass-card rounded-2xl p-6 md:p-8 border border-slate-700/60 relative">
+            
+            <!-- Stimulus / Context Box -->
+            <div id="quiz-stimulus-box" class="mb-5 p-4 rounded-xl bg-slate-900/90 border border-slate-800 text-slate-300 text-xs md:text-sm leading-relaxed border-l-4 border-l-cyan-500">
+              <span class="text-cyan-400 font-bold uppercase tracking-wider text-[10px] block mb-1">
+                <i class="fa-solid fa-book-open mr-1"></i> Stimulus Studi Kasus
+              </span>
+              <p id="quiz-stimulus-text">Loading stimulus...</p>
+            </div>
+
+            <!-- Question Text -->
+            <h3 id="quiz-question-text" class="text-base md:text-lg font-bold text-white mb-6 leading-snug">
+              Loading pertanyaan...
+            </h3>
+
+            <!-- Multiple Choice Options -->
+            <div id="quiz-options-container" class="space-y-3">
+              <!-- JS rendered options -->
+            </div>
+
+            <!-- Instant Feedback Panel -->
+            <div id="quiz-feedback-box" class="hidden mt-6 p-4 rounded-xl border leading-relaxed text-xs md:text-sm">
+              <div class="flex items-center gap-2 font-bold mb-1" id="quiz-feedback-title">
+                <!-- Status icon + text -->
+              </div>
+              <p id="quiz-feedback-explain" class="text-slate-300"></p>
+            </div>
+
+          </div>
+
+          <!-- Question Controls Bottom Bar -->
+          <div class="glass-card rounded-xl p-4 flex items-center justify-between gap-3 border border-slate-700/60">
+            <button id="btn-prev" onclick="navigateQuestion(-1)" class="px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-semibold border border-slate-700 transition flex items-center gap-2">
+              <i class="fa-solid fa-arrow-left"></i>
+              <span>Sebelumnya</span>
+            </button>
+
+            <!-- Doubt Checkbox Toggle -->
+            <label class="cursor-pointer flex items-center gap-2 px-3 py-2 rounded-xl bg-amber-500/10 hover:bg-amber-500/20 text-amber-400 border border-amber-500/30 text-xs font-medium transition">
+              <input type="checkbox" id="chk-doubt" onchange="toggleDoubtStatus()" class="w-4 h-4 rounded text-amber-500 focus:ring-amber-400 bg-slate-800 border-slate-700">
+              <span>Ragu-ragu</span>
+            </label>
+
+            <button id="btn-next" onclick="navigateQuestion(1)" class="px-5 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-semibold shadow-md transition flex items-center gap-2">
+              <span>Selanjutnya</span>
+              <i class="fa-solid fa-arrow-right"></i>
+            </button>
+            <button id="btn-finish" onclick="confirmFinishQuiz()" class="hidden px-5 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-semibold shadow-md transition flex items-center gap-2">
+              <i class="fa-solid fa-check-circle"></i>
+              <span>Selesai & Lihat Skor</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Sidebar Question Navigation Grid (1 Col) -->
+        <div class="hidden lg:block lg:col-span-1">
+          <div class="glass-card rounded-2xl p-5 border border-slate-700/60 sticky top-20">
+            <h4 class="text-xs font-bold uppercase tracking-wider text-slate-300 mb-3 flex items-center justify-between">
+              <span>Peta Navigasi Soal</span>
+              <span id="nav-answered-counter" class="text-[10px] px-2 py-0.5 rounded bg-indigo-500/20 text-indigo-300">0/50</span>
+            </h4>
+            <p class="text-[11px] text-slate-400 mb-4">Klik nomor untuk melompat langsung ke soal.</p>
+            
+            <!-- Grid 1-50 -->
+            <div id="quiz-nav-grid" class="grid grid-cols-5 gap-2 max-h-96 overflow-y-auto custom-scrollbar p-1">
+              <!-- JS rendered 1-50 buttons -->
+            </div>
+
+            <div class="mt-4 pt-3 border-t border-slate-800 space-y-1.5 text-[10px] text-slate-400">
+              <div class="flex items-center gap-2"><span class="w-3 h-3 rounded bg-indigo-600 inline-block"></span> Sudah Dijawab</div>
+              <div class="flex items-center gap-2"><span class="w-3 h-3 rounded bg-amber-500 inline-block"></span> Ragu-ragu</div>
+              <div class="flex items-center gap-2"><span class="w-3 h-3 rounded bg-slate-800 border border-slate-700 inline-block"></span> Belum Dijawab</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- 3. SCREEN HASIL AKHIR / SCOREBOARD -->
+    <section id="screen-result" class="hidden w-full max-w-4xl mx-auto space-y-6">
+      <div class="glass-card rounded-3xl p-6 md:p-10 text-center relative overflow-hidden border border-indigo-500/30 shadow-2xl">
+        <span class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 text-emerald-400 text-xs font-semibold border border-emerald-500/30 mb-4">
+          <i class="fa-solid fa-trophy"></i> Hasil Kuis Selesai
+        </span>
+
+        <h2 class="text-2xl md:text-3xl font-extrabold text-white mb-2">Papan Skor & Evaluasi</h2>
+        <p class="text-xs md:text-sm text-slate-400 mb-8">SMAN 1 Karawang • Modul Sistem Komputer & IMK</p>
+
+        <!-- Big Score Circle -->
+        <div class="w-36 h-36 md:w-44 md:h-44 rounded-full bg-gradient-to-tr from-indigo-600 via-indigo-500 to-cyan-400 mx-auto p-1.5 glow-effect mb-6 flex items-center justify-center">
+          <div class="w-full h-full bg-slate-950 rounded-full flex flex-col items-center justify-center p-2">
+            <span class="text-xs text-slate-400 uppercase tracking-widest font-semibold">Skor Akhir</span>
+            <span id="res-score-number" class="text-4xl md:text-5xl font-black text-white">0</span>
+            <span class="text-[10px] text-slate-400">dari 100</span>
+          </div>
+        </div>
+
+        <!-- Grade & Predicate Badge -->
+        <div id="res-predicate-badge" class="inline-block px-4 py-1.5 rounded-xl font-bold text-sm mb-8">
+          Sangat Baik
+        </div>
+
+        <!-- Detail Metrics Grid -->
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 max-w-2xl mx-auto mb-8 text-xs">
+          <div class="p-3.5 rounded-xl bg-slate-900/80 border border-slate-800">
+            <span class="text-slate-400 block mb-1">Benar</span>
+            <span id="res-correct-count" class="text-xl font-bold text-emerald-400">0</span>
+          </div>
+          <div class="p-3.5 rounded-xl bg-slate-900/80 border border-slate-800">
+            <span class="text-slate-400 block mb-1">Salah</span>
+            <span id="res-wrong-count" class="text-xl font-bold text-rose-400">0</span>
+          </div>
+          <div class="p-3.5 rounded-xl bg-slate-900/80 border border-slate-800">
+            <span class="text-slate-400 block mb-1">Akurasi</span>
+            <span id="res-accuracy-rate" class="text-xl font-bold text-cyan-400">0%</span>
+          </div>
+          <div class="p-3.5 rounded-xl bg-slate-900/80 border border-slate-800">
+            <span class="text-slate-400 block mb-1">Waktu Pengerjaan</span>
+            <span id="res-total-time" class="text-xl font-bold text-amber-300">00:00</span>
+          </div>
+        </div>
+
+        <!-- Result Action Buttons -->
+        <div class="flex flex-wrap items-center justify-center gap-4">
+          <button onclick="restartQuiz()" class="px-6 py-3 rounded-xl bg-gradient-to-r from-indigo-600 to-cyan-500 hover:from-indigo-500 hover:to-cyan-400 text-white font-bold text-xs shadow-lg transition flex items-center gap-2">
+            <i class="fa-solid fa-rotate-right"></i>
+            <span>Ulangi Kuis</span>
+          </button>
+          <button onclick="toggleReviewSection()" class="px-6 py-3 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 font-bold text-xs transition flex items-center gap-2">
+            <i class="fa-solid fa-list-check text-cyan-400"></i>
+            <span>Review Kunci Jawaban Lengkap</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Review Section Container -->
+      <div id="res-review-container" class="hidden space-y-4">
+        <h3 class="text-lg font-bold text-white flex items-center gap-2">
+          <i class="fa-solid fa-book-open text-indigo-400"></i>
+          <span>Pembahasan & Kunci Jawaban Lengkap</span>
+        </h3>
+        
+        <div id="res-review-list" class="space-y-4">
+          <!-- JS rendered review item list -->
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- MODAL PANDUAN -->
+  <div id="modal-guide" class="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+    <div class="glass-card rounded-2xl max-w-lg w-full p-6 border border-slate-700 relative shadow-2xl">
+      <button onclick="toggleGuideModal()" class="absolute top-4 right-4 text-slate-400 hover:text-white text-lg">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+
+      <h3 class="text-base font-bold text-white mb-4 flex items-center gap-2">
+        <i class="fa-solid fa-circle-info text-cyan-400"></i>
+        <span>Panduan Penggunaan MPI</span>
+      </h3>
+
+      <div class="space-y-3 text-xs text-slate-300 leading-relaxed max-h-80 overflow-y-auto custom-scrollbar pr-2">
+        <p><strong>1. Pilihan Ganda:</strong> Kuis terdiri dari hingga 50 soal Pilihan Ganda (A, B, C, D, E) berdasarkan kurikulum Informatika SMAN 1 Karawang.</p>
+        <p><strong>2. Stimulus Studi Kasus:</strong> Setiap soal dilengkapi stimulus cerita/kasus dunia nyata untuk melatih kemampuan analisis berpikir kritis.</p>
+        <p><strong>3. Fitur Ragu-ragu:</strong> Centang opsi "Ragu-ragu" jika Anda belum yakin dengan jawaban yang dipilih.</p>
+        <p><strong>4. Navigasi Soal:</strong> Gunakan tombol "Sebelumnya", "Selanjutnya", atau klik grid nomor 1-50 di panel navigasi.</p>
+        <p><strong>5. Review & Pembahasan:</strong> Di akhir kuis, Anda dapat melihat total skor serta ringkasan pembahasan kunci jawaban secara detail.</p>
+      </div>
+
+      <div class="mt-6 text-right">
+        <button onclick="toggleGuideModal()" class="px-4 py-2 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl text-xs font-bold transition">
+          Saya Mengerti
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL MOBILE NAV GRID -->
+  <div id="modal-navgrid" class="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4 lg:hidden">
+    <div class="glass-card rounded-2xl max-w-md w-full p-6 border border-slate-700 relative shadow-2xl">
+      <button onclick="toggleNavGridModal()" class="absolute top-4 right-4 text-slate-400 hover:text-white text-lg">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+
+      <h3 class="text-sm font-bold text-white mb-3">Peta Navigasi Soal</h3>
+      <div id="quiz-mobile-nav-grid" class="grid grid-cols-5 gap-2 max-h-80 overflow-y-auto custom-scrollbar p-1">
+        <!-- JS rendered grid -->
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="w-full glass-card py-4 px-4 text-center text-xs text-slate-500 border-t border-slate-800">
+    <p>© 2026 SMAN 1 Karawang • Media Pembelajaran Interaktif Informatika Kelas X</p>
+  </footer>
+
+  <!-- JAVASCRIPT LOGIC -->
+  <script>
+    /* ==========================================================================
+       1. DATA BANK 50 SOAL LENGKAP
+       ========================================================================== */
+    const rawQuestionsData = [
+      {
+        id: 1,
+        category: "Bagian A: Sistem Komputer",
+        stimulus: "Di ruang laboratorium komputer SMAN 1 Karawang, para siswa sedang merakit PC. Mereka memegang benda fisik seperti keyboard, RAM, monitor, dan processor.",
+        question: "Perangkat fisik pada komputer yang dapat dilihat, disentuh, dan dipindahkan secara langsung disebut dengan istilah...",
+        options: ["Hardware", "Software", "Brainware", "Firmware", "Malware"],
+        answer: 0,
+        explanation: "Hardware (perangkat keras) adalah komponen fisik sistem komputer yang dapat disentuh dan dilihat secara langsung."
+      },
+      {
+        id: 2,
+        category: "Bagian A: Sistem Komputer",
+        stimulus: "Siswa menjalankan sistem operasi Windows dan program Microsoft Word untuk mengetik laporan praktikum informatika.",
+        question: "Program atau sekumpulan kode instruksi digital yang memberi perintah pada hardware agar bekerja disebut...",
+        options: ["Hardware", "Software", "Brainware", "Processor", "Harddisk"],
+        answer: 1,
+        explanation: "Software (perangkat lunak) berupa kode atau aplikasi digital yang menginstruksikan hardware melakukan tugas tertentu."
+      },
+      {
+        id: 3,
+        category: "Bagian A: Sistem Komputer",
+        stimulus: "Meskipun komputer canggih telah tersedia di sekolah, komputer tidak akan berguna tanpa adanya siswa atau guru yang mengoperasikannya.",
+        question: "Manusia atau pengguna yang mengoperasikan, mengatur, dan memanfaatkan komputer disebut...",
+        options: ["Hardware", "Software", "System Analyst", "Brainware", "Database Driver"],
+        answer: 3,
+        explanation: "Brainware merujuk pada manusia/pengguna yang mengoperasikan dan memanfaatkan sistem komputer."
+      },
+      {
+        id: 4,
+        category: "Bagian A: Sistem Komputer",
+        stimulus: "Saat mengisi formulir biodata siswa di komputer, kamu mengetikkan nama dan NISN menggunakan keyboard.",
+        question: "Fungsi utama komputer yang menerima data mentah dari pengguna via perangkat masukan dinamakan...",
+        options: ["Input Data", "Process Data", "Output Data", "Storage Data", "Control Data"],
+        answer: 0,
+        explanation: "Input Data adalah proses memasukkan atau menerima data mentah dari perangkat masukan ke dalam sistem."
+      },
+      {
+        id: 5,
+        category: "Bagian A: Sistem Komputer",
+        stimulus: "Setelah kamu memasukkan angka matematika, CPU komputer dengan cepat menghitung hasil penjumlahannya.",
+        question: "Tahap mengolah data mentah menjadi informasi berguna via pemrosesan CPU/ALU dinamakan...",
+        options: ["Input Data", "Process Data", "Output Data", "Save Data", "Transmit Data"],
+        answer: 1,
+        explanation: "Process Data adalah aktivitas CPU/ALU dalam mengolah data mentah menjadi informasi terstruktur."
+      },
+      {
+        id: 6,
+        category: "Bagian A: Sistem Komputer",
+        stimulus: "Hasil perhitungan statistik ditampilkan di layar monitor dan dicetak ke dalam lembaran kertas oleh printer.",
+        question: "Fungsi utama sistem komputer dalam menampilkan hasil pemrosesan ke pengguna via monitor/printer adalah...",
+        options: ["Input Data", "Process Data", "Output Data", "Storage Data", "Fetching Data"],
+        answer: 2,
+        explanation: "Output Data adalah proses menampilkan atau mengeluarkan hasil olahan data dalam bentuk visual, suara, atau cetakan."
+      },
+      {
+        id: 7,
+        category: "Bagian A: Sistem Komputer",
+        stimulus: "Sebelum mematikan komputer lab, siswa mengklik tombol Save agar berkas dokumen tersimpan aman di SSD/Flashdisk.",
+        question: "Fungsi utama sistem komputer yang bertugas menyimpan data hasil pemrosesan ke media penyimpanan adalah...",
+        options: ["Input Data", "Process Data", "Output Data", "Simpan Data / Storage", "Data Networking"],
+        answer: 3,
+        explanation: "Storage Data (Simpan Data) bertugas mengamankan berkas ke dalam memori sekunder permanen."
+      },
+      {
+        id: 8,
+        category: "Bagian A: Sistem Komputer",
+        stimulus: "Smartphone, tablet, dan ultrabook merupakan perangkat yang dirancang untuk penggunaan pribadi single-user.",
+        question: "Klasifikasi jenis komputer berukuran kecil yang ditujukan untuk penggunaan pribadi adalah...",
+        options: ["Komputer Mainframe", "Supercomputer", "Mikro Komputer", "Minicomputer", "Server Cluster"],
+        answer: 2,
+        explanation: "Mikro Komputer adalah komputer skala kecil personal seperti HP, tablet, dan laptop ultrabook."
+      },
+      {
+        id: 9,
+        category: "Bagian A: Sistem Komputer",
+        stimulus: "Di lab komputer sekolah, terdapat komputer jenis desktop dengan layar terpisah yang fleksibel untuk pembelajaran siswa.",
+        question: "Jenis komputer dengan desain desktop statis serta kinerja fleksibel untuk penggunaan belajar adalah...",
+        options: ["Personal Computer (PC)", "Mainframe", "Supercomputer", "Raspberry Pi", "Smartphone"],
+        answer: 0,
+        explanation: "Personal Computer (PC) Desktop biasa digunakan di laboratorium sekolah untuk aktivitas komputasi harian."
+      },
+      {
+        id: 10,
+        category: "Bagian A: Sistem Komputer",
+        stimulus: "Bank Mandiri dan maskapai penerbangan memproses ribuan transaksi pembayaran dan pemesanan tiket secara bersamaan.",
+        question: "Komputer berukuran besar yang mampu memproses transaksi masif secara simultan dinamakan...",
+        options: ["Mikro Komputer", "Personal Computer", "Komputer Mainframe", "Mini PC", "Laptop Gaming"],
+        answer: 2,
+        explanation: "Komputer Mainframe menangani transaksi skala raksasa untuk instansi bank, penerbangan, dan pemerintahan."
+      },
+      {
+        id: 11,
+        category: "Bagian A: Sistem Komputer",
+        stimulus: "BMKG menggunakan komputer dengan kecepatan kalkulasi triliunan FLOPS untuk memprediksi badai dan bencana alam.",
+        question: "Jenis komputer tercepat di dunia yang digunakan untuk simulasi riset medis dan cuaca adalah...",
+        options: ["Mainframe", "Minicomputer", "Supercomputer", "PC Workstation", "Server Lokal"],
+        answer: 2,
+        explanation: "Supercomputer adalah jenis komputer berkemampuan pemrosesan tertinggi di dunia."
+      },
+      {
+        id: 12,
+        category: "Bagian B: Interaksi (IMK)",
+        stimulus: "Saat menggunakan smartphone, kamu membuka Instagram cukup dengan menyentuh ikon aplikasi visual di layar.",
+        question: "Nama jenis antarmuka yang memanfaatkan elemen grafis seperti ikon, tombol, dan gambar visual adalah...",
+        options: ["CLI", "GUI (Graphical User Interface)", "Text Shell", "Batch System", "Command Prompt"],
+        answer: 1,
+        explanation: "GUI memanfaatkan elemen visual grafis sehingga sangat ramah pengguna (user-friendly)."
+      },
+      {
+        id: 13,
+        category: "Bagian B: Interaksi (IMK)",
+        stimulus: "Saat membaca postingan berita di media sosial HP, kamu menggeser layar ke atas secara terus-menerus.",
+        question: "Gerakan jari menggeser layar untuk menggulir linimasa dinamakan...",
+        options: ["Tap", "Pinch", "Swipe / Scroll", "Double Click", "Long Press"],
+        answer: 2,
+        explanation: "Swipe / Scroll adalah gerakan menggeser jari di atas layar sentuh untuk bernavigasi."
+      },
+      {
+        id: 14,
+        category: "Bagian B: Interaksi (IMK)",
+        stimulus: "Ketika ingin melihat detail foto di HP, kamu merenggangkan atau mencubit dua jari di atas layar.",
+        question: "Gerakan jari mencubit layar sentuh untuk memperbesar atau memperkecil tampilan dinamakan...",
+        options: ["Swipe", "Tap", "Scroll", "Pinch", "Drag"],
+        answer: 3,
+        explanation: "Pinch (Mencubit Layar) digunakan untuk zoom-in atau zoom-out tampilan media."
+      },
+      {
+        id: 15,
+        category: "Bagian B: Interaksi (IMK)",
+        stimulus: "Bayangkan jika seluruh ikon visual di HP hilang dan hanya tersisa tulisan teks kecil yang rumit.",
+        question: "Mengapa hilangnya ikon visual akan sangat menyulitkan anak-anak maupun orang tua?",
+        options: [
+          "Baterai HP akan menjadi lebih cepat habis",
+          "Gambar ikon jauh lebih mudah dikenali dan dihafal dibanding membaca perintah teks",
+          "Layar sentuh tidak bisa merespons teks",
+          "Format tulisan membutuhkan koneksi internet tinggi",
+          "Sistem HP akan otomatis terkunci"
+        ],
+        answer: 1,
+        explanation: "Elemen visual/gambar ikon lebih intuitif dan mudah dipahami oleh otak manusia tanpa perlu membaca teks."
+      },
+      {
+        id: 16,
+        category: "Bagian B: Interaksi (IMK)",
+        stimulus: "Ahli jaringan komputer di film hacker mengetik baris perintah berwarna hijau pada layar monitor hitam tanpa mouse.",
+        question: "Jenis antarmuka komputer yang hanya mengandalkan perintah teks dan keyboard dinamakan...",
+        options: ["GUI", "Mobile UI", "CLI (Command Line Interface)", "Audio UI", "Touch Screen"],
+        answer: 2,
+        explanation: "CLI (Command Line Interface) adalah antarmuka berbasis baris teks tanpa tombol grafis."
+      },
+      {
+        id: 17,
+        category: "Bagian B: Interaksi (IMK)",
+        stimulus: "Kamu ingin mengecek apakah jaringan internet di komputer lab SMAN 1 Karawang sedang terhubung atau putus.",
+        question: "Perintah teks yang harus diketikkan pada aplikasi Command Prompt (CMD) Windows adalah...",
+        options: ["start windows", "ping google.com", "connect internet", "open browser", "check wifi"],
+        answer: 1,
+        explanation: "Perintah `ping google.com` digunakan di CLI/CMD untuk menguji konektivitas jaringan internet."
+      },
+      {
+        id: 18,
+        category: "Bagian B: Interaksi (IMK)",
+        stimulus: "Pada antarmuka CLI, ketika kamu salah mengetik satu huruf perintah saja, sistem langsung menolak dan menampilkan kesalahan.",
+        question: "Sistem CLI bersifat sangat kaku terhadap kesalahan ketik karena...",
+        options: [
+          "Komputer CLI sedang terinfeksi virus",
+          "Komputer CLI tidak memiliki kecerdasan otomatis menebak maksud manusia dan hanya mencocokkan sintaks persis",
+          "Keyboard tidak didukung oleh CLI",
+          "Kapasitas RAM komputer terlalu kecil",
+          "Layar monitor mengalami kegagalan warna"
+        ],
+        answer: 1,
+        explanation: "CLI bekerja mutlak berdasarkan kamus perintah/sintaks yang terprogram di dalamnya."
+      },
+      {
+        id: 19,
+        category: "Bagian B: Interaksi (IMK)",
+        stimulus: "Meski GUI ramah pengguna, para administrator server profesional lebih memilih menggunakan antarmuka CLI.",
+        question: "Keunggulan utama antarmuka CLI dibandingkan GUI adalah...",
+        options: [
+          "CLI memiliki tampilan warna yang lebih estetik",
+          "CLI mengonsumsi lebih sedikit RAM/pemrosesan dan sangat efisien bagi teknisi",
+          "CLI tidak memerlukan keyboard",
+          "CLI mendukung gestur tangan visual",
+          "CLI secara otomatis memperbaiki kesalahan program"
+        ],
+        answer: 1,
+        explanation: "CLI sangat hemat sumber daya memori (RAM) serta cepat diproses karena tidak perlu memuat elemen grafis."
+      },
+      {
+        id: 20,
+        category: "Bagian C: Interaksi Masa Depan",
+        stimulus: "Saat menyetir mobil, seseorang mengucapkan 'Ok Google, putar lagu' tanpa perlu menyentuh layar HP.",
+        question: "Bentuk interaksi antara manusia dan komputer yang memanfaatkan media ucapan dinamakan...",
+        options: ["Interaksi Visual", "Antarmuka Bahasa Natural / Audio", "Interaksi Gestur", "Biometrik", "CLI"],
+        answer: 1,
+        explanation: "Natural Language / Voice UI memungkinkan interaksi manusia dengan sistem menggunakan ucapan lisan."
+      },
+      {
+        id: 21,
+        category: "Bagian C: Interaksi Masa Depan",
+        stimulus: "Agar Google Assistant atau Siri dapat mendengarkan perintah suara kamu dengan jelas.",
+        question: "Perangkat keras (hardware) utama pada HP yang wajib aktif untuk menangkap gelombang suara adalah...",
+        options: ["Speaker", "Monitor", "Mikrofon", "Processor", "Sensor Cahaya"],
+        answer: 2,
+        explanation: "Mikrofon bertugas mengubah gelombang suara lisan menjadi sinyal digital yang dapat diproses komputer."
+      },
+      {
+        id: 22,
+        category: "Bagian C: Interaksi Masa Depan",
+        stimulus: "Fitur perintah suara membawa dampak inklusif yang sangat besar bagi dunia teknologi.",
+        question: "Manfaat paling utama dari Voice UI bagi penyandang tunanetra atau mereka yang tangannya sibuk adalah...",
+        options: [
+          "Membuat daya baterai HP tahan lama",
+          "Dapat mengoperasikan teknologi cukup dengan berbicara tanpa harus melihat layar atau mengetik fisik",
+          "Mempercepat koneksi internet jaringan",
+          "Menghilangkan kebutuhan sistem operasi",
+          "Menyimpan file secara otomatis di cloud"
+        ],
+        answer: 1,
+        explanation: "Voice UI memberikan aksesibilitas tinggi bagi penyandang disabilitas fisik atau tunanetra."
+      },
+      {
+        id: 23,
+        category: "Bagian C: Interaksi Masa Depan",
+        stimulus: "Game Xbox Kinect dan kamera HP dapat mengenali melambaikan tangan pengguna untuk mengganti halaman.",
+        question: "Antarmuka yang memanfaatkan kamera untuk mendeteksi gerakan tubuh atau gestur wajah dikategorikan sebagai...",
+        options: ["Voice UI", "Interaksi Berbasis Gambar/Video (Gesture)", "CLI Text", "Sensor Sentuh", "Biometrik Suara"],
+        answer: 1,
+        explanation: "Interaksi berbasis Gambar/Video (Gesture) mengenali pola gerakan fisik melalui sensor kamera."
+      },
+      {
+        id: 24,
+        category: "Bagian C: Interaksi Masa Depan",
+        stimulus: "Aplikasi TikTok secara cerdas dapat memasang filter telinga kelinci tepat di atas kepala penggunanya.",
+        question: "Perangkat lunak yang bekerja mendeteksi koordinat mata, hidung, dan mulut dari citra kamera dinamakan...",
+        options: ["Pengolah Kata", "Pengolah Citra (Image Processing)", "Spreadsheet", "Database Driver", "Antivirus"],
+        answer: 1,
+        explanation: "Pengolah Citra (Image/Video Processing) memproses data piksel gambar untuk mengenali pola objek/wajah."
+      },
+      {
+        id: 25,
+        category: "Bagian C: Interaksi Masa Depan",
+        stimulus: "Seseorang memakai kacamata hitam sangat tebal di dalam ruangan gelap lalu mencoba membuka Face Unlock HP.",
+        question: "Mengapa pemindaian Face Unlock kemungkinan besar akan gagal pada kondisi tersebut?",
+        options: [
+          "Karena RAM memori HP langsung penuh",
+          "Kamera tidak dapat memproses data citra mata dan kontur wajah akibat terhalang dan kurangnya cahaya",
+          "Karena baterai HP di bawah 10%",
+          "Sistem operasi otomatis melakukan format ulang",
+          "Karena kartu SIM terlepas"
+        ],
+        answer: 1,
+        explanation: "Sensor kamera butuh pencahayaan memadai dan pandangan jelas ke titik biometrik wajah."
+      },
+      {
+        id: 26,
+        category: "Bagian C: Interaksi Masa Depan",
+        stimulus: "Mesin absensi guru di SMAN 1 Karawang membaca pola garis pada jempol, dan smartwatch membaca detak jantung.",
+        question: "Piranti masukan modern yang membaca karakteristik fisik unik manusia dinamakan...",
+        options: ["Barcode Scanner", "Sensor Biometrik", "Mouse Optik", "Keyboard Mekanikal", "Stylus Pen"],
+        answer: 1,
+        explanation: "Sensor Biometrik mengukur karakteristik biologis manusia seperti sidik jari, iris mata, atau detak jantung."
+      },
+      {
+        id: 27,
+        category: "Bagian C: Interaksi Masa Depan",
+        stimulus: "Di dalam rumah, perangkat ini secara otomatis menaikkan atau menurunkan suhu pendingin sesuai kondisi ruangan.",
+        question: "Contoh alat elektronik rumah tangga yang bekerja otomatis berbasis sensor suhu adalah...",
+        options: ["Lampu pijar biasa", "AC (Air Conditioner)", "Kipas angin manual", "Senter LED", "Radio"],
+        answer: 1,
+        explanation: "AC modern dilengkapi sensor termostat untuk menyesuaikan suhu ruangan secara otomatis."
+      },
+      {
+        id: 28,
+        category: "Bagian C: Interaksi Masa Depan",
+        stimulus: "Banyak sistem keamanan perbankan mengganti password kata sandi teks biasa dengan pemindaian sidik jari.",
+        question: "Mengapa penggunaan biometrik jauh lebih aman dibanding kata sandi teks biasa?",
+        options: [
+          "Karena sidik jari unik pada tiap manusia dan sangat sulit dipalsukan atau diintip orang lain",
+          "Karena biometrik tidak butuh aliran listrik",
+          "Karena kata sandi teks mudah terhapus",
+          "Karena biometrik mempercepat koneksi Wi-Fi",
+          "Karena biometrik gratis tanpa biaya"
+        ],
+        answer: 0,
+        explanation: "Identitas biometrik setiap orang bersifat unik dan tidak bisa diintip atau ditebak seperti password biasa."
+      },
+      {
+        id: 29,
+        category: "Bagian D: Sistem Operasi",
+        stimulus: "Tanpa adanya software ini, komputer yang baru dirakit hanya akan menampilkan layar kosong dan hardware tidak bisa bekerja.",
+        question: "Perangkat lunak utama pengelola seluruh sumber daya hardware dan aplikasi pada komputer dinamakan...",
+        options: ["Browser Chrome", "Sistem Operasi (OS)", "Microsoft Word", "Antivirus", "Driver Grafis"],
+        answer: 1,
+        explanation: "Sistem Operasi (OS) adalah perangkat lunak dasar pengelola hardware dan tempat berjalannya aplikasi."
+      },
+      {
+        id: 30,
+        category: "Bagian D: Sistem Operasi",
+        stimulus: "Saat mengetik tugas di MS Word, kamu juga bisa sambil mendengarkan musik di Spotify tanpa laptop mengalami lag.",
+        question: "Fungsi OS dalam membagi alokasi daya pemrosesan CPU untuk menjalankan banyak program bersamaan disebut...",
+        options: ["Manajemen Memori", "Manajemen File", "Manajemen Proses (Multitasking)", "Kontrol I/O", "Kernel Shell"],
+        answer: 2,
+        explanation: "Manajemen Proses mengatur jalannya thread aplikasi dan kemampuan multitasking sistem."
+      },
+      {
+        id: 31,
+        category: "Bagian D: Sistem Operasi",
+        stimulus: "Ketika membuka banyak tab browser, OS secara dinamis mengatur kapasitas RAM agar tidak terjadi crash.",
+        question: "Fungsi OS dalam mengalokasikan dan membebaskan ruang memori sementara RAM dinamakan...",
+        options: ["Manajemen Proses", "Manajemen Memori", "Manajemen File", "Device Driver", "Formatting"],
+        answer: 1,
+        explanation: "Manajemen Memori bertanggung jawab mengelola alokasi kapasitas RAM bagi aplikasi."
+      },
+      {
+        id: 32,
+        category: "Bagian D: Sistem Operasi",
+        stimulus: "Kamu membuat folder baru, memindahkan dokumen, dan menghapus foto lama yang tidak terpakai di harddisk.",
+        question: "Fungsi OS dalam mengorganisir folder serta mengontrol simpan/hapus data dinamakan...",
+        options: ["Manajemen Proses", "Manajemen Memori", "Manajemen File", "User Interface", "Kernel Control"],
+        answer: 2,
+        explanation: "Manajemen File mengatur struktur direktori, penyimpanan, dan hak akses berkas."
+      },
+      {
+        id: 33,
+        category: "Bagian D: Sistem Operasi",
+        stimulus: "Saat mencolokkan printer merk baru, OS menginstal program khusus agar komputer paham cara berkomunikasi dengan printer tersebut.",
+        question: "Program penerjemah khusus antara OS dan perangkat keras spesifik dinamakan...",
+        options: ["User Interface", "Device Driver", "File System", "Compiler", "Kernel"],
+        answer: 1,
+        explanation: "Device Driver adalah software penerjemah agar OS dapat mengenali dan mengontrol perangkat keras tertentu."
+      },
+      {
+        id: 34,
+        category: "Bagian D: Sistem Operasi",
+        stimulus: "Dalam arsitektur OS, terdapat bagian inti terpercaya yang berinteraksi langsung dengan hardware komputer.",
+        question: "Inti dari sistem operasi yang menjembatani aplikasi dengan hardware dinamakan...",
+        options: ["Shell", "Kernel", "User Interface", "BIOS", "Register"],
+        answer: 1,
+        explanation: "Kernel adalah komponen inti paling mendasar dari sistem operasi."
+      },
+      {
+        id: 35,
+        category: "Bagian D: Sistem Operasi",
+        stimulus: "Flashdisk biasanya menggunakan format FAT32, sedangkan harddisk Windows menggunakan format NTFS.",
+        question: "Struktur aturan baku pengorganisasian dan penyimpanan berkas pada media simpan dinamakan...",
+        options: ["File System", "Memory Map", "Device Manager", "Task Manager", "GUI"],
+        answer: 0,
+        explanation: "File System (seperti FAT32, NTFS, EXT4) menentukan cara file dinamai, disimpan, dan diorganisir di disk."
+      },
+      {
+        id: 36,
+        category: "Bagian D: Sistem Operasi",
+        stimulus: "Layar komputer Windows menampilkan taskbar, tombol Start, dan jendela aplikasi yang mudah diklik.",
+        question: "Komponen OS tempat pengguna melihat dan berinteraksi secara visual dinamakan...",
+        options: ["Kernel", "Device Driver", "User Interface (UI)", "System Bus", "Power Management"],
+        answer: 2,
+        explanation: "User Interface (UI) adalah lapisan antarmuka yang menghubungkan pengguna dengan sistem operasi."
+      },
+      {
+        id: 37,
+        category: "Bagian D: Sistem Operasi",
+        stimulus: "Sistem operasi komersial buatan Microsoft ini paling banyak digunakan di komputer sekolah dan perkantoran.",
+        question: "Nama sistem operasi berbasis GUI populer buatan Microsoft tersebut adalah...",
+        options: ["Apple macOS", "Linux Ubuntu", "Microsoft Windows", "Android", "Unix"],
+        answer: 2,
+        explanation: "Microsoft Windows adalah OS paling dominan untuk pengguna PC dan komputer sekolah."
+      },
+      {
+        id: 38,
+        category: "Bagian D: Sistem Operasi",
+        stimulus: "Sistem operasi ini dikembangkan secara terbuka, gratis, sangat stabil, dan digunakan pada server web SMAN 1 Karawang.",
+        question: "Sistem operasi bersifat Open-Source dan terkenal sangat aman dari serangan virus adalah...",
+        options: ["Microsoft Windows", "Linux", "Apple iOS", "MS-DOS", "macOS"],
+        answer: 1,
+        explanation: "Linux adalah sistem operasi Open-Source yang terkenal sangat stabil dan aman untuk server."
+      },
+      {
+        id: 39,
+        category: "Bagian D: Sistem Operasi",
+        stimulus: "Para desainer grafis dan editor video profesional banyak menggunakan komputer Apple iMac.",
+        question: "Sistem operasi eksklusif yang berjalan pada komputer buatan Apple dinamakan...",
+        options: ["Windows 11", "Linux Debian", "Apple macOS", "ChromeOS", "Android"],
+        answer: 2,
+        explanation: "macOS adalah sistem operasi eksklusif ciptaan Apple untuk lini komputer Mac."
+      },
+      {
+        id: 40,
+        category: "Bagian E: Evaluasi Komprehensif",
+        stimulus: "Siswa ingin memasukkan teks dokumen dan mengarahkan kursor di layar komputer.",
+        question: "Manakah pasangan perangkat di bawah ini yang tergolong sebagai Input Device?",
+        options: [
+          "Monitor dan Speaker",
+          "Printer dan Proyektor",
+          "Keyboard dan Mouse",
+          "Harddisk dan SSD",
+          "Processor dan RAM"
+        ],
+        answer: 2,
+        explanation: "Keyboard dan Mouse adalah contoh utama piranti masukan (Input Device)."
+      },
+      {
+        id: 41,
+        category: "Bagian E: Evaluasi Komprehensif",
+        stimulus: "Setelah komputer mengolah data, hasil tulisan perlu ditampilkan secara visual agar bisa dibaca pengguna.",
+        question: "Contoh perangkat keras yang berfungsi sebagai Output Device adalah...",
+        options: ["Keyboard", "Mouse", "Monitor", "Mikrofon", "Scanner"],
+        answer: 2,
+        explanation: "Monitor bertugas menampilkan keluaran (output) gambar dan teks bagi pengguna."
+      },
+      {
+        id: 42,
+        category: "Bagian E: Evaluasi Komprehensif",
+        stimulus: "Dalam struktur sistem komputer, komponen ini disebut sebagai 'otak' tempat eksekusi instruksi aritmatika dilakukan.",
+        question: "Komponen pemroses utama tersebut adalah...",
+        options: ["RAM", "Harddisk", "CPU (Central Processing Unit)", "Power Supply", "VGA Card"],
+        answer: 2,
+        explanation: "CPU adalah otak pusat pemrosesan logika dan instruksi sistem komputer."
+      },
+      {
+        id: 43,
+        category: "Bagian E: Evaluasi Komprehensif",
+        stimulus: "Perbandingan performa antara antarmuka GUI dan CLI saat dijalankan di komputer lama.",
+        question: "Mengapa GUI membutuhkan konsumsi RAM yang jauh lebih besar dibanding CLI?",
+        options: [
+          "Karena GUI menggunakan bahasa pemrograman rahasia",
+          "Karena GUI harus memuat elemen grafis visual, warna, dan jendela beresolusi tinggi ke memori",
+          "Karena GUI tidak mendukung processor multi-core",
+          "Karena CLI secara otomatis mematikan RAM",
+          "Karena GUI membutuhkan koneksi internet"
+        ],
+        answer: 1,
+        explanation: "Grafis visual pada GUI membutuhkan memori RAM besar untuk merender tampilan antarmuka."
+      },
+      {
+        id: 44,
+        category: "Bagian E: Evaluasi Komprehensif",
+        stimulus: "Analisis karakteristik antarmuka komputer: (1) Menghafal teks sintaks, (2) Efisien untuk teknisi, (3) Berbasis ikon visual.",
+        question: "Karakteristik yang benar untuk antarmuka CLI ditunjukkan oleh nomor...",
+        options: ["(1) dan (2)", "(2) dan (3)", "(1) dan (3)", "Hanya (1)", "Semua Benar"],
+        answer: 0,
+        explanation: "CLI membutuhkan keahlian menghafal sintaks teks dan sangat disukai teknisi karena efisien."
+      },
+      {
+        id: 45,
+        category: "Bagian E: Evaluasi Komprehensif",
+        stimulus: "Penggunaan Siri, Google Assistant, dan Alexa semakin populer di kalangan pengguna modern.",
+        question: "Sistem interaksi tersebut merupakan wujud dari antarmuka...",
+        options: ["Voice / Natural Language Interface", "CLI Command", "Touch Button", "Batch System", "Manual Dial"],
+        answer: 0,
+        explanation: "Asisten suara merupakan wujud nyata Antarmuka Bahasa Natural (Voice UI)."
+      },
+      {
+        id: 46,
+        category: "Bagian E: Evaluasi Komprehensif",
+        stimulus: "Perangkat ponsel cerdas zaman sekarang dapat mengidentifikasi pemiliknya saat memandang ke layar.",
+        question: "Perangkat keras sensor utama yang menyuplai data citra wajah untuk Face Unlock adalah...",
+        options: ["Kamera Depan / Sensor Citra", "Port Charger", "Speaker", "Kartu Memori SD", "Flash LED"],
+        answer: 0,
+        explanation: "Kamera depan bertindak sebagai sensor citra pembaca pola wajah biometrik."
+      },
+      {
+        id: 47,
+        category: "Bagian E: Evaluasi Komprehensif",
+        stimulus: "Saat komputer dimatikan tiba-tiba tanpa disimpan, dokumen yang baru diketik di MS Word akan hilang.",
+        question: "Data aplikasi yang sedang berjalan disimpan pada memori sementara acak yaitu...",
+        options: ["Harddisk", "SSD", "RAM (Random Access Memory)", "ROM", "Flashdisk"],
+        answer: 2,
+        explanation: "RAM bersifat volatile (data hilang saat listrik atau komputer mati)."
+      },
+      {
+        id: 48,
+        category: "Bagian E: Evaluasi Komprehensif",
+        stimulus: "Peran krusial Sistem Operasi pada seluruh komputer dan HP di dunia.",
+        question: "Mengapa Sistem Operasi mutlak diperlukan dalam sistem komputer?",
+        options: [
+          "Tanpa OS, hardware tidak dapat dikelola dan aplikasi tidak bisa dijalankan",
+          "OS berfungsi mengisi daya baterai secara nirkabel",
+          "OS menggantikan peran listrik perangkat",
+          "OS adalah satu-satunya perangkat keras yang bisa disentuh",
+          "OS digunakan untuk mencetak kertas fisik secara otomatis"
+        ],
+        answer: 0,
+        explanation: "Sistem Operasi adalah fondasi penyedia ekosistem agar hardware dan software aplikasi dapat bekerja bersama."
+      },
+      {
+        id: 49,
+        category: "Bagian E: Evaluasi Komprehensif",
+        stimulus: "Teknologi rumah pintar (Smart Home) menggunakan sensor suhu untuk kenyamanan keluarga.",
+        question: "Dua peralatan rumah tangga yang memanfaatkan sensor suhu otomatis adalah...",
+        options: ["AC dan Kulkas", "Senter dan TV", "Kipas Angin Biasa dan Lampu", "Pintu dan Jendela", "Radio dan Speaker"],
+        answer: 0,
+        explanation: "AC dan Kulkas (Refrigerator) mengandalkan sensor suhu untuk mengatur sistem pendingin otomatis."
+      },
+      {
+        id: 50,
+        category: "Bagian E: Evaluasi Komprehensif",
+        stimulus: "Sistem komputer bekerja melalui siklus pemrosesan data yang terstruktur secara logis.",
+        question: "Manakah di bawah ini yang BUKAN termasuk 4 fungsi utama sistem komputer?",
+        options: ["Input Data", "Process Data", "Output Data", "Simpan Data", "Desain Grafis Otomatis"],
+        answer: 4,
+        explanation: "Empat fungsi utama komputer adalah Input, Proses, Output, dan Storage (Simpan Data)."
+      }
+    ];
+
+
+    /* ==========================================================================
+       2. STATE APLIKASI
+       ========================================================================== */
+    let quizQuestions = [];
+    let currentQuestionIdx = 0;
+    let userAnswers = {}; // { questionIdx: { optionIdx: Number, isDoubt: Boolean } }
+    let feedbackMode = "instant"; // 'instant' or 'end'
+    let timerInterval = null;
+    let secondsElapsed = 0;
+
+    /* ==========================================================================
+       3. INISIALISASI & KONTROL SCREEN
+       ========================================================================== */
+    window.addEventListener('DOMContentLoaded', () => {
+      // Setup default view
+      showScreen('welcome');
+    });
+
+    function showScreen(screenName) {
+      document.getElementById('screen-welcome').classList.add('hidden');
+      document.getElementById('screen-quiz').classList.add('hidden');
+      document.getElementById('screen-result').classList.add('hidden');
+      document.getElementById('top-stats-bar').classList.add('hidden');
+
+      if (screenName === 'welcome') {
+        document.getElementById('screen-welcome').classList.remove('hidden');
+      } else if (screenName === 'quiz') {
+        document.getElementById('screen-quiz').classList.remove('hidden');
+        document.getElementById('top-stats-bar').classList.remove('hidden');
+      } else if (screenName === 'result') {
+        document.getElementById('screen-result').classList.remove('hidden');
+      }
+    }
+
+    /* ==========================================================================
+       4. MULAI KUIS LOGIC
+       ========================================================================== */
+    function startQuiz() {
+      const countSelect = parseInt(document.getElementById('select-question-count').value);
+      feedbackMode = document.getElementById('select-feedback-mode').value;
+
+      // Slice questions based on selection
+      if (countSelect === 50) {
+        quizQuestions = [...rawQuestionsData];
+      } else {
+        // Shuffle & pick
+        const shuffled = [...rawQuestionsData].sort(() => 0.5 - Math.random());
+        quizQuestions = shuffled.slice(0, countSelect);
+      }
+
+      // Reset State
+      currentQuestionIdx = 0;
+      userAnswers = {};
+      secondsElapsed = 0;
+
+      // Start Timer
+      if (timerInterval) clearInterval(timerInterval);
+      timerInterval = setInterval(() => {
+        secondsElapsed++;
+        updateTimerDisplay();
+      }, 1000);
+
+      // Render UI
+      showScreen('quiz');
+      renderQuestion();
+      renderNavGrid();
+    }
+
+    function updateTimerDisplay() {
+      const mins = Math.floor(secondsElapsed / 60);
+      const secs = secondsElapsed % 60;
+      const str = `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+      document.getElementById('quiz-timer').innerText = str;
+      document.getElementById('top-timer-text').innerText = str;
+    }
+
+    /* ==========================================================================
+       5. RENDER SOAL & OPSI
+       ========================================================================== */
+    function renderQuestion() {
+      const q = quizQuestions[currentQuestionIdx];
+      const total = quizQuestions.length;
+
+      // Update Counters & Progress Bar
+      document.getElementById('quiz-current-num').innerText = currentQuestionIdx + 1;
+      document.getElementById('quiz-total-num').innerText = total;
+      document.getElementById('top-progress-text').innerText = `${currentQuestionIdx + 1}/${total}`;
+      
+      const progressPercent = Math.round(((currentQuestionIdx + 1) / total) * 100);
+      document.getElementById('quiz-progress-bar').style.width = `${progressPercent}%`;
+
+      // Update Category & Content
+      document.getElementById('quiz-category-badge').innerText = q.category;
+      document.getElementById('quiz-stimulus-text').innerText = q.stimulus;
+      document.getElementById('quiz-question-text').innerText = `${currentQuestionIdx + 1}. ${q.question}`;
+
+      // Render Options
+      const optionsContainer = document.getElementById('quiz-options-container');
+      optionsContainer.innerHTML = '';
+
+      const optionLabels = ['A', 'B', 'C', 'D', 'E'];
+      const currentAns = userAnswers[currentQuestionIdx];
+
+      q.options.forEach((optText, optIdx) => {
+        const isSelected = currentAns && currentAns.optionIdx === optIdx;
+        
+        const btn = document.createElement('button');
+        btn.onclick = () => selectOption(optIdx);
+        btn.className = `w-full p-3.5 md:p-4 rounded-xl border text-left text-xs md:text-sm font-medium transition flex items-center justify-between gap-3 ${
+          isSelected 
+            ? 'bg-indigo-600/30 border-indigo-500 text-white shadow-md glow-effect' 
+            : 'bg-slate-800/80 hover:bg-slate-700/80 border-slate-700/80 text-slate-200'
+        }`;
+
+        btn.innerHTML = `
+          <div class="flex items-center gap-3">
+            <span class="w-7 h-7 rounded-lg flex items-center justify-center font-bold text-xs ${
+              isSelected ? 'bg-indigo-500 text-white' : 'bg-slate-900 text-slate-400 border border-slate-700'
+            }">${optionLabels[optIdx]}</span>
+            <span>${optText}</span>
+          </div>
+          ${isSelected ? '<i class="fa-solid fa-circle-check text-indigo-400 text-base"></i>' : ''}
+        `;
+        optionsContainer.appendChild(btn);
+      });
+
+      // Update Doubt Checkbox
+      const chkDoubt = document.getElementById('chk-doubt');
+      chkDoubt.checked = currentAns ? !!currentAns.isDoubt : false;
+
+      // Handle Feedback Display
+      const feedbackBox = document.getElementById('quiz-feedback-box');
+      if (feedbackMode === 'instant' && currentAns && currentAns.optionIdx !== undefined) {
+        showInstantFeedback(q, currentAns.optionIdx);
+      } else {
+        feedbackBox.classList.add('hidden');
+      }
+
+      // Buttons State
+      document.getElementById('btn-prev').disabled = currentQuestionIdx === 0;
+      document.getElementById('btn-prev').classList.toggle('opacity-50', currentQuestionIdx === 0);
+
+      if (currentQuestionIdx === total - 1) {
+        document.getElementById('btn-next').classList.add('hidden');
+        document.getElementById('btn-finish').classList.remove('hidden');
+      } else {
+        document.getElementById('btn-next').classList.remove('hidden');
+        document.getElementById('btn-finish').classList.add('hidden');
+      }
+
+      // Refresh Nav Grids
+      updateNavGridActiveState();
+    }
+
+    /* ==========================================================================
+       6. USER INTERACTION LOGIC
+       ========================================================================== */
+    function selectOption(optIdx) {
+      const q = quizQuestions[currentQuestionIdx];
+      const isDoubt = userAnswers[currentQuestionIdx] ? userAnswers[currentQuestionIdx].isDoubt : false;
+
+      userAnswers[currentQuestionIdx] = {
+        optionIdx: optIdx,
+        isDoubt: isDoubt
+      };
+
+      renderQuestion();
+      renderNavGrid();
+    }
+
+    function toggleDoubtStatus() {
+      const chk = document.getElementById('chk-doubt');
+      if (!userAnswers[currentQuestionIdx]) {
+        userAnswers[currentQuestionIdx] = { optionIdx: undefined, isDoubt: chk.checked };
+      } else {
+        userAnswers[currentQuestionIdx].isDoubt = chk.checked;
+      }
+      renderNavGrid();
+    }
+
+    function showInstantFeedback(q, chosenIdx) {
+      const feedbackBox = document.getElementById('quiz-feedback-box');
+      const feedbackTitle = document.getElementById('quiz-feedback-title');
+      const feedbackExplain = document.getElementById('quiz-feedback-explain');
+
+      const isCorrect = chosenIdx === q.answer;
+      feedbackBox.classList.remove('hidden', 'bg-emerald-950/40', 'border-emerald-500/50', 'bg-rose-950/40', 'border-rose-500/50');
+
+      if (isCorrect) {
+        feedbackBox.classList.add('bg-emerald-950/40', 'border-emerald-500/50');
+        feedbackTitle.className = "flex items-center gap-2 font-bold mb-1 text-emerald-400";
+        feedbackTitle.innerHTML = '<i class="fa-solid fa-circle-check"></i> Jawaban Kamu Benar!';
+      } else {
+        const optionLabels = ['A', 'B', 'C', 'D', 'E'];
+        feedbackBox.classList.add('bg-rose-950/40', 'border-rose-500/50');
+        feedbackTitle.className = "flex items-center gap-2 font-bold mb-1 text-rose-400";
+        feedbackTitle.innerHTML = `<i class="fa-solid fa-circle-xmark"></i> Jawaban Kurang Tepat (Kunci: ${optionLabels[q.answer]})`;
+      }
+
+      feedbackExplain.innerText = q.explanation;
+    }
+
+    function navigateQuestion(direction) {
+      const newIdx = currentQuestionIdx + direction;
+      if (newIdx >= 0 && newIdx < quizQuestions.length) {
+        currentQuestionIdx = newIdx;
+        renderQuestion();
+      }
+    }
+
+    function jumpToQuestion(idx) {
+      currentQuestionIdx = idx;
+      renderQuestion();
+      // Hide mobile modal if open
+      document.getElementById('modal-navgrid').classList.add('hidden');
+    }
+
+    /* ==========================================================================
+       7. QUESTION NAV GRID RENDER
+       ========================================================================== */
+    function renderNavGrid() {
+      const gridDesktop = document.getElementById('quiz-nav-grid');
+      const gridMobile = document.getElementById('quiz-mobile-nav-grid');
+      gridDesktop.innerHTML = '';
+      gridMobile.innerHTML = '';
+
+      let answeredCount = 0;
+
+      quizQuestions.forEach((q, idx) => {
+        const uAns = userAnswers[idx];
+        const isAnswered = uAns && uAns.optionIdx !== undefined;
+        const isDoubt = uAns && uAns.isDoubt;
+        const isActive = idx === currentQuestionIdx;
+
+        if (isAnswered) answeredCount++;
+
+        let btnClass = 'bg-slate-800 text-slate-300 border-slate-700';
+        if (isDoubt) {
+          btnClass = 'bg-amber-500 text-slate-950 font-bold border-amber-400';
+        } else if (isAnswered) {
+          btnClass = 'bg-indigo-600 text-white font-bold border-indigo-400';
+        }
+
+        if (isActive) {
+          btnClass += ' ring-2 ring-cyan-400 ring-offset-2 ring-offset-slate-900';
+        }
+
+        const createBtn = () => {
+          const btn = document.createElement('button');
+          btn.onclick = () => jumpToQuestion(idx);
+          btn.className = `h-9 w-full rounded-lg text-xs font-semibold border transition flex items-center justify-center ${btnClass}`;
+          btn.innerText = idx + 1;
+          return btn;
+        };
+
+        gridDesktop.appendChild(createBtn());
+        gridMobile.appendChild(createBtn());
+      });
+
+      document.getElementById('nav-answered-counter').innerText = `${answeredCount}/${quizQuestions.length}`;
+    }
+
+    function updateNavGridActiveState() {
+      renderNavGrid();
+    }
+
+    /* ==========================================================================
+       8. SELESAI & SCOREBOARD LOGIC
+       ========================================================================== */
+    function confirmFinishQuiz() {
+      const answeredCount = Object.values(userAnswers).filter(a => a.optionIdx !== undefined).length;
+      const total = quizQuestions.length;
+
+      if (answeredCount < total) {
+        const unanswered = total - answeredCount;
+        if (!confirm(`Masih ada ${unanswered} soal yang belum dijawab. Yakin ingin menyelesaikan kuis?`)) {
+          return;
+        }
+      }
+
+      finishQuiz();
+    }
+
+    function finishQuiz() {
+      if (timerInterval) clearInterval(timerInterval);
+
+      // Calculate Scores
+      let correctCount = 0;
+      quizQuestions.forEach((q, idx) => {
+        const uAns = userAnswers[idx];
+        if (uAns && uAns.optionIdx === q.answer) {
+          correctCount++;
+        }
+      });
+
+      const totalQuestions = quizQuestions.length;
+      const wrongCount = totalQuestions - correctCount;
+      const score = Math.round((correctCount / totalQuestions) * 100);
+      const accuracy = Math.round((correctCount / totalQuestions) * 100);
+
+      // Render Score Results
+      document.getElementById('res-score-number').innerText = score;
+      document.getElementById('res-correct-count').innerText = correctCount;
+      document.getElementById('res-wrong-count').innerText = wrongCount;
+      document.getElementById('res-accuracy-rate').innerText = `${accuracy}%`;
+
+      // Format Time
+      const mins = Math.floor(secondsElapsed / 60);
+      const secs = secondsElapsed % 60;
+      document.getElementById('res-total-time').innerText = `${mins}m ${secs}s`;
+
+      // Predicate Badge
+      const badge = document.getElementById('res-predicate-badge');
+      if (score >= 85) {
+        badge.className = 'inline-block px-4 py-1.5 rounded-xl font-bold text-sm bg-emerald-500/20 text-emerald-300 border border-emerald-500/40';
+        badge.innerText = 'Predikat: Sangat Baik / Istimewa';
+      } else if (score >= 70) {
+        badge.className = 'inline-block px-4 py-1.5 rounded-xl font-bold text-sm bg-cyan-500/20 text-cyan-300 border border-cyan-500/40';
+        badge.innerText = 'Predikat: Baik / Tuntas';
+      } else if (score >= 55) {
+        badge.className = 'inline-block px-4 py-1.5 rounded-xl font-bold text-sm bg-amber-500/20 text-amber-300 border border-amber-500/40';
+        badge.innerText = 'Predikat: Cukup (Perlu Latihan)';
+      } else {
+        badge.className = 'inline-block px-4 py-1.5 rounded-xl font-bold text-sm bg-rose-500/20 text-rose-300 border border-rose-500/40';
+        badge.innerText = 'Predikat: Perlu Belajar Lagi';
+      }
+
+      // Render Review List
+      renderReviewList();
+
+      showScreen('result');
+    }
+
+    /* ==========================================================================
+       9. REVIEW DISCUSSION LIST RENDER
+       ========================================================================== */
+    function renderReviewList() {
+      const reviewList = document.getElementById('res-review-list');
+      reviewList.innerHTML = '';
+
+      const optionLabels = ['A', 'B', 'C', 'D', 'E'];
+
+      quizQuestions.forEach((q, idx) => {
+        const uAns = userAnswers[idx];
+        const userChoice = uAns ? uAns.optionIdx : undefined;
+        const isCorrect = userChoice === q.answer;
+
+        const card = document.createElement('div');
+        card.className = `glass-card rounded-2xl p-5 border text-xs md:text-sm leading-relaxed ${
+          isCorrect ? 'border-emerald-500/40 bg-emerald-950/10' : 'border-rose-500/40 bg-rose-950/10'
+        }`;
+
+        let statusBadge = isCorrect 
+          ? '<span class="px-2.5 py-1 rounded-md bg-emerald-500/20 text-emerald-300 font-bold"><i class="fa-solid fa-check"></i> Benar</span>'
+          : '<span class="px-2.5 py-1 rounded-md bg-rose-500/20 text-rose-300 font-bold"><i class="fa-solid fa-xmark"></i> Salah</span>';
+
+        const userChoiceText = userChoice !== undefined ? `${optionLabels[userChoice]}. ${q.options[userChoice]}` : '<em class="text-slate-500">Tidak Dijawab</em>';
+        const keyChoiceText = `${optionLabels[q.answer]}. ${q.options[q.answer]}`;
+
+        card.innerHTML = `
+          <div class="flex items-center justify-between gap-2 mb-3">
+            <span class="font-bold text-indigo-300">Soal #${idx + 1} • ${q.category}</span>
+            ${statusBadge}
+          </div>
+          <p class="text-slate-400 italic mb-2 text-xs bg-slate-900/60 p-2.5 rounded-lg border border-slate-800">${q.stimulus}</p>
+          <h4 class="font-bold text-white mb-3 text-sm">${q.question}</h4>
+          
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-2 mb-3">
+            <div class="p-2.5 rounded-lg ${isCorrect ? 'bg-emerald-900/30 border border-emerald-700/50 text-emerald-200' : 'bg-rose-900/30 border border-rose-700/50 text-rose-200'}">
+              <span class="text-[10px] uppercase font-bold text-slate-400 block">Jawaban Kamu:</span>
+              <span>${userChoiceText}</span>
+            </div>
+            <div class="p-2.5 rounded-lg bg-indigo-900/30 border border-indigo-700/50 text-indigo-200">
+              <span class="text-[10px] uppercase font-bold text-slate-400 block">Kunci Jawaban Benar:</span>
+              <span>${keyChoiceText}</span>
+            </div>
+          </div>
+
+          <div class="p-3 rounded-lg bg-slate-900/80 border border-slate-800 text-slate-300 text-xs">
+            <strong class="text-cyan-400 block mb-1"><i class="fa-solid fa-lightbulb"></i> Pembahasan:</strong>
+            ${q.explanation}
+          </div>
+        `;
+
+        reviewList.appendChild(card);
+      });
+    }
+
+    function toggleReviewSection() {
+      const container = document.getElementById('res-review-container');
+      container.classList.toggle('hidden');
+      if (!container.classList.contains('hidden')) {
+        container.scrollIntoView({ behavior: 'smooth' });
+      }
+    }
+
+    function restartQuiz() {
+      showScreen('welcome');
+    }
+
+    /* ==========================================================================
+       10. MODAL TOGGLES
+       ========================================================================== */
+    function toggleGuideModal() {
+      const modal = document.getElementById('modal-guide');
+      modal.classList.toggle('hidden');
+    }
+
+    function toggleNavGridModal() {
+      const modal = document.getElementById('modal-navgrid');
+      modal.classList.toggle('hidden');
+    }
+  </script>
+</body>
+</html>
